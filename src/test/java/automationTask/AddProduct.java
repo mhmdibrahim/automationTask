@@ -22,8 +22,10 @@ import static java.awt.SystemColor.window;
 
 public class AddProduct {
     public static void main(String[] args) {
-
+        //Login
         WebDriver driver =  automationTask.MazaadyLogin.login();
+
+        //Home Page
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(300));
         WebElement hover = driver.findElement(By.xpath("//*[@id=\"top-header-main\"]/div/div/div[2]/div/div/div[2]/a"));
         hover.click();
@@ -36,12 +38,14 @@ public class AddProduct {
         new WebDriverWait(driver,Duration.ofSeconds(50)).until(ExpectedConditions.elementToBeClickable(addproduct));
         */
 
+        // First Page
         // first Step (1)
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(350));
         WebElement nextStep=driver.findElement(By.xpath("//*[@id=\"step-1\"]/div/div[3]/div/button"));
         nextStep.click();
 
-        // Second Step (2)
+        //  Second Page
+        //  Second Step (2)
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(120));
 
         // Add Aution Name
@@ -56,6 +60,7 @@ public class AddProduct {
         mainCategory.sendKeys("CARS , MOTORCYCLES & ACCESSORIES");
         Actions actions = new Actions(driver);
         actions.sendKeys(Keys.ENTER).build().perform();
+        actions.release().perform();
         actions.release().perform();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(150));
         // Select Sub Category
@@ -183,6 +188,52 @@ public class AddProduct {
         WebElement next_step = driver.findElement(By.xpath("//*[@id=\"step-2\"]/span/div[2]/div[13]/div/button[2]"));
         next_step.click();
 
+        //Third Page
+        //Select Auction Duration
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(100));
+        Select duration = new Select(driver.findElement(By.id("duration")));
+        duration.selectByVisibleText("3 Min");
+        duration.selectByIndex(1);
+
+        //Select Selling Type
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(100));
+        Select selling_type = new Select(driver.findElement(By.xpath("//*[@id=\"step-3\"]/span/div/div[1]/div[3]/span[2]/select")));
+        selling_type.selectByVisibleText("UNDER APPROVAL");
+        selling_type.selectByIndex(1);
+
+        //Select Currency
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(100));
+        WebElement currency=driver.findElement(By.xpath("//*[@id=\"step-3\"]/span/div/div[3]/div[1]/span[2]/input"));
+        currency.sendKeys("Egypt (EGP)");
+        actions.sendKeys(Keys.ENTER).build().perform();
+        actions.release().perform();
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(150));
+
+        //Add Starting Bid Value
+
+        WebElement start_value=driver.findElement(By.xpath("//*[@id=\"step-3\"]/span/div/div[3]/div[1]/span[2]/input"));
+        start_value.sendKeys("3");
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(100));
+
+        //Add Date
+        WebElement date=driver.findElement(By.xpath("//*[@id=\"vue-button-to-open-date\"]"));
+        date.sendKeys("19/12/2022");
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(100));
+
+        //Add Time
+        WebElement time=driver.findElement(By.xpath("//*[@id=\"vue-button-to-open-time\"]"));
+        time.sendKeys("05:46 PM");
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(100));
+
+        //Auction show type
+        WebElement show_type=driver.findElement(By.xpath("//*[@id=\"step-3\"]/span/div/div[9]/span/div[1]/label/span[2]"));
+        show_type.click();
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(100));
+
+        //Next Step Button
+        WebElement next_step2 = driver.findElement(By.xpath("//*[@id=\"step-3\"]/span/div/div[11]/div/button[2]"));
+        next_step.click();
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(100));
     }
 
 }
