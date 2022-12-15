@@ -12,14 +12,19 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.Select;
+
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.Driver;
 import java.time.Duration;
+
+import static java.awt.SystemColor.window;
 
 public class AddProduct {
     public static void main(String[] args) {
 
         WebDriver driver =  automationTask.MazaadyLogin.login();
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(250));
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(300));
         WebElement hover = driver.findElement(By.xpath("//*[@id=\"top-header-main\"]/div/div/div[2]/div/div/div[2]/a"));
         hover.click();
         WebElement addproduct = driver.findElement(By.linkText("Add Product"));
@@ -32,8 +37,8 @@ public class AddProduct {
         */
 
         // first Step (1)
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(200));
-        WebElement nextStep=driver.findElement(By.className("continue"));
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(350));
+        WebElement nextStep=driver.findElement(By.xpath("//*[@id=\"step-1\"]/div/div[3]/div/button"));
         nextStep.click();
 
         // Second Step (2)
@@ -134,6 +139,7 @@ public class AddProduct {
         country_made.sendKeys("Egypt");
         actions.sendKeys(Keys.ENTER).build().perform();
         actions.release().perform();
+
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(100));
 
         //Add Quantity
@@ -157,20 +163,25 @@ public class AddProduct {
         WebDriver frame2 = driver.switchTo().frame(fr2);
         WebElement return_policy = frame2.findElement(By.xpath("//*[@id=\"tinymce\"]/p/br"));
         return_policy.sendKeys("Return and Exchange policy");
-        driver = frame.switchTo().parentFrame();
+        driver = frame2.switchTo().parentFrame();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(100));
 
         //Main image
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(100));
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("window.scrollBy(0,380)");
+        //js.executeScript("window.scrollBy(0,document.body.scrollHeight)");
         WebElement main_image=driver.findElement(By.xpath("//*[@id=\"step-2\"]/span/div[2]/div[10]/div/div/div[1]/div/div[3]/label"));
-        actions.sendKeys(Keys.ENTER).build().perform();
-        actions.release().perform();
+//        actions.sendKeys(Keys.ENTER).build().perform();
+//        actions.release().perform();
+//        main_image.click();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(100));
-        main_image.sendKeys("limboxmas-530.jpg.cf.jpg");
+        Path dest = Paths.get("./Photos", "im.JPG");
+        main_image.sendKeys(dest.toAbsolutePath().toString());
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(100));
         //Next Step button
         WebElement next_step = driver.findElement(By.xpath("//*[@id=\"step-2\"]/span/div[2]/div[13]/div/button[2]"));
-        addproduct.click();
+        next_step.click();
 
     }
 
