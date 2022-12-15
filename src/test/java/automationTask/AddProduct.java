@@ -142,11 +142,35 @@ public class AddProduct {
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(100));
 
         //Add Auction Details
-        WebElement aution_details=driver.findElement(By.xpath("//*[@id=\"tinymce\"]/p/br"));
-        aution_details.click();
-        aution_details.sendKeys("Auction Details");
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(50));
 
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(100));
+        WebElement fr = driver.findElement(By.id("tinymce_description_ifr"));
+        WebDriver frame = driver.switchTo().frame(fr);
+        WebElement Auction_details = frame.findElement(By.xpath("//*[@id=\"tinymce\"]/p/br"));
+        Auction_details.sendKeys("Aution Details");
+        driver = frame.switchTo().parentFrame();
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(100));
+
+        //Add Return and Exchange policy
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(100));
+        WebElement fr2 = driver.findElement(By.id("tinymce_policy_ifr"));
+        WebDriver frame2 = driver.switchTo().frame(fr2);
+        WebElement return_policy = frame2.findElement(By.xpath("//*[@id=\"tinymce\"]/p/br"));
+        return_policy.sendKeys("Return and Exchange policy");
+        driver = frame.switchTo().parentFrame();
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(100));
+
+        //Main image
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(100));
+        WebElement main_image=driver.findElement(By.xpath("//*[@id=\"step-2\"]/span/div[2]/div[10]/div/div/div[1]/div/div[3]/label"));
+        actions.sendKeys(Keys.ENTER).build().perform();
+        actions.release().perform();
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(100));
+        main_image.sendKeys("limboxmas-530.jpg.cf.jpg");
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(100));
+        //Next Step button
+        WebElement next_step = driver.findElement(By.xpath("//*[@id=\"step-2\"]/span/div[2]/div[13]/div/button[2]"));
+        addproduct.click();
 
     }
 
